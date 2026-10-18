@@ -166,3 +166,47 @@ const port = process.env.PORT || 10000;
 app.listen(port, "0.0.0.0", () => {
   console.log("BY TAI BA KHI KEY API started");
 });
+app.get("/getkey", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>BY TÀI BÁ KHÍ - GET KEY</title>
+      <style>
+        body {
+          background: #10051f;
+          color: white;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 40px 16px;
+        }
+        .box {
+          max-width: 400px;
+          margin: auto;
+          padding: 24px;
+          border: 1px solid #a855f7;
+          border-radius: 16px;
+          background: #1b0b30;
+        }
+        button {
+          background: #a855f7;
+          color: white;
+          border: 0;
+          border-radius: 10px;
+          padding: 12px 20px;
+          font-size: 16px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <h2>BY TÀI BÁ KHÍ HUB</h2>
+        <p>Trang nhận key đang được thiết lập.</p>
+        <p>Hoàn thành bước vượt link để tiếp tục.</p>
+      </div>
+    </body>
+    </html>
+  `);
+});
