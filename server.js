@@ -166,6 +166,37 @@ const port = process.env.PORT || 10000;
 app.listen(port, "0.0.0.0", () => {
   console.log("BY TAI BA KHI KEY API started");
 });
+app.get("/create-short-link", async (req, res) => {
+  try {
+    const destination =
+      "https://tai-ba-khi-key-system-1.onrender.com/getkey";
+
+    const params = new URLSearchParams({
+      api: process.env.LINK4M_API_KEY,
+      url: destination
+    });
+
+    const response = await fetch(
+      `https://link4m.co/api-shorten/v2?${params}`
+    );
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      return res.status(400).json({
+        error: "Link4M could not create the short link"
+      });
+    }
+
+    res.json({
+      shortenedUrl: result.shortenedUrl
+    });
+  } catch (error) {
+    res.status(502).json({
+      error: "Unable to contact Link4M"
+    });
+  }
+});
 app.get("/getkey", (req, res) => {
   res.send(`
     <!DOCTYPE html>
