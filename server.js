@@ -192,8 +192,11 @@ app.get("/create-short-link", async (req, res) => {
       shortenedUrl: result.shortenedUrl
     });
   } catch (error) {
+    console.error("Link4M request failed:", error.message);
+
     res.status(502).json({
-      error: "Unable to contact Link4M"
+      error: "Link4M request failed",
+      detail: error.message
     });
   }
 });
