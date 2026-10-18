@@ -177,10 +177,26 @@ app.get("/create-short-link", async (req, res) => {
     });
 
     const response = await fetch(
-      `https://link4m.co/api-shorten/v2?${params}`
-    );
+  `https://link4m.co/api-shorten/v2?${params}`
+);
 
-    const result = await response.json();
+const raw = await response.text();
+
+let result;
+try {
+  result = JSON.parse(raw);
+} catch {
+  console.error(
+    "Link4M returned non-JSON:",
+    response.status,
+    raw.slice(0, 300)
+  );
+
+  return res.status(502).json({
+    error: "Link4M returned HTML instead of JSON",
+    httpStatus: response.status
+  });
+}
 
     if (result.status !== "success") {
       return res.status(400).json({
